@@ -42,5 +42,22 @@ def insert_review(review: Review):
             cursor.close()
             connection.close()
 
+def test(): 
+    review = Review()
+    review.set_comment("hi")
+    review.set_prof("hank")
+    review.set_quality(5)
+    review.set_difficulty(3)
+    review.set_course("cs")
+    insert_review(review)
+
+test()
+
+
+
+
+
+
+
     
 
