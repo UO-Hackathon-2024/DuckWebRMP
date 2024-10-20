@@ -109,14 +109,14 @@ def get_my_courses():
     course_response = request.form.get('my_course')
     course = course_response[1]
     action = course_response[0]
-    if action = "ADD" and course:
-        course = ast.literal_eval(course)
+    course = ast.literal_eval(course)
+    if action == "ADD" and course:
         if 'my_courses' not in session:
             session['my_courses'] = []
         session['my_courses'].append(course)
         session.modified = True
     else: 
-        session['my_courses'].pop(course)
+        session['my_courses'].remove(course)
     my_courses = session.get('my_courses', [])
     return render_template('mycourses.html', my_courses=my_courses)
 
