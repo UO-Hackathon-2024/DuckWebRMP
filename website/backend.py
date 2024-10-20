@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from flask_sqlalchemy import SQLAlchemy
+import mysql.connector
 
 
 # Initialize the app
@@ -50,7 +50,8 @@ def get_all_courses():
     cursor = connection.cursor(dictionary=True)
 
     cursor.execute("SELECT * FROM duckwebscraper")
-    courses.fetchall()
+    courses = cursor.fetchall()
+    
 
     cursor.close()
     connection.close()
