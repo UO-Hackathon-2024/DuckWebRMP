@@ -51,12 +51,14 @@ def get_all_courses():
 
     cursor.execute("SELECT * FROM duckwebscraper")
     courses = cursor.fetchall()
+    cursor.execute("SELECT * FROM review")
+    reviews = cursor.fetchall()
     
 
     cursor.close()
     connection.close()
 
-    return render_template('courses.html', courses=courses)
+    return render_template('courses.html', courses=courses, reviews=reviews)
 
 
 
