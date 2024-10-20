@@ -109,6 +109,7 @@ def get_my_courses():
     course_response = request.form.get('my_course')
     course = course_response[1]
     action = course_response[0]
+    print(course)
     course = ast.literal_eval(course)
     if action == "ADD" and course:
         if 'my_courses' not in session:
