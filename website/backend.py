@@ -6,6 +6,7 @@ import mysql.connector
 
 # Initialize the app
 app = Flask(__name__)
+app.secret_key = "test"
 
 db_config = {
     'host': 'localhost',
@@ -101,16 +102,16 @@ def get_courses():
     return render_template('courses.html', courses=courses, reviews=reviews)
 
 @app.route('/add_course', methods=['POST'])
-def add_course(course):
+def add_course():
     course = request.form.get('my_course')
     if course:
         if 'my_courses' not in session:
             session['my_courses'] = []
         session['my_courses'].append(course)
         session.modified = True
-        return jsonify(success=True, my_courses=session['my_courses'])
-    return 'Failed to add course', 400
-
+        return 'Course added', 200
+    return 'Error adding course', 400
+        
 @app.route('/mycourses', methods=['GET'])
 def get_my_courses(): 
 
