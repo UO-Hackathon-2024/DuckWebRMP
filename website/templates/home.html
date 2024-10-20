@@ -33,6 +33,7 @@
         <label for="courses" class ="majorSelect"> Select a Class: </label>
 
         <select name="courses" id = courses class="forms">
+	    <option value="None">No Selection</option>
           {%for courses in courses%} 
           <!-- used Jinja2 to loop through the courses list. Each item becomes a new option.-->
             <option value="{{ courses }}">{{ courses }}</option> 
@@ -43,6 +44,7 @@
         <br>
         <label for="prof" class = 'majorSelect'> Select a Professor: </label>
         <select name ='prof' id="prof" class="forms">
+	    <option value="None">No Selection</option>
           {%for profs in profs%}
           <option value = "{{profs}}"> {{profs}} </option>
           {%endfor%}

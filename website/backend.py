@@ -49,20 +49,49 @@ def get_courses():
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor(dictionary=True)
 
+    
     selected_course = request.form.get('courses') 
-    selected_course = selected_course.replace(" ", "")
+    selected_prof = request.form.get('prof')
 
-    alternate_course = ""
-    if selected_course.startswith("CS"): 
-        alternate_course = "CIS" + selected_course[2:]
+    if selected_course == "None" and selceted_prof == "None": 
+        cursor.execute(f"SELECT * FROM duckwebscraper")
+        courses = cursor.fetchall()
+        cursor.execute(f"SELECT * FROM reviews")
+        reviews = cursor.fetchall()
 
 
-    cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}') OR (course = '{alternate_course}')")
-    courses = cursor.fetchall()
-    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}') OR (class = '{alternate_course}')")
-    reviews = cursor.fetchall()
+    if selected_course != "None" and selected_prof == "None": 
+        selected_course = selected_course.replace(" ", "")
 
-    print(reviews)
+        alternate_course = ""
+        if selected_course.startswith("CS"): 
+            alternate_course = "CIS" + selected_course[2:]
+
+        cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}') OR (course = '{alternate_course}')")
+        courses = cursor.fetchall()
+        cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}') OR (class = '{alternate_course}')")
+        reviews = cursor.fetchall()
+
+    if selected_course == "None" and selected_prof != "None": 
+        cursor.execute(f"SELECT * FROM duckwebscraper WHERE (Professor = '{selected_prof}')")
+        courses = cursor.fetchall()
+        cursor.execute(f"SELECT * FROM reviews WHERE (professor_name = '{selected_prof}')")
+        reviews = cursor.fetchall()
+
+    if selected_course != "None" and selected_prof != "None": 
+        selected_course = selected_course.replace(" ", "")
+
+        alternate_course = ""
+        if selected_course.startswith("CS"): 
+            alternate_course = "CIS" + selected_course[2:]
+        cursor.execute(f"""SELECT * FROM duckwebscraper WHERE ((course = '{selected_course}') OR (course = '{alternate_course}'))
+                       AND (Professor = '{selected_prof}')""")
+        courses = cursor.fetchall()
+        cursor.execute(f"""SELECT * FROM reviews WHERE ((class = '{selected_course}') OR (class = '{alternate_course}'))
+                       AND (professor_name = '{selected_prof}')""")
+        reviews = cursor.fetchall()
+
+
 
     cursor.close()
     connection.close()
