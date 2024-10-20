@@ -50,10 +50,10 @@ def get_courses():
     cursor = connection.cursor(dictionary=True)
 
     selected_course = request.form.get('courses') 
-
-    cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course.replace(" ", "")}')")
+    selected_course = selected_course.replace(" ", "")
+    cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}')")
     courses = cursor.fetchall()
-    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course.replace(" ", "")}')")
+    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}')")
     reviews = cursor.fetchall()
 
     print(courses)
