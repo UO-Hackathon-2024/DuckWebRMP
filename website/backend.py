@@ -2,12 +2,15 @@ from flask import Flask
 from flask import render_template, request, session, jsonify
 import mysql.connector
 import ast
+import secrets
 
 
 
 # Initialize the app
 app = Flask(__name__)
-app.secret_key = "secret"
+
+secret_key = secrets.token_hex(16)
+app.secret_key = secret_key
 
 db_config = {
     'host': 'localhost',
