@@ -51,9 +51,15 @@ def get_courses():
 
     selected_course = request.form.get('courses') 
     selected_course = selected_course.replace(" ", "")
-    cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}')")
+
+    alternate_course = ""
+    if selected_course.startswith("CS"): 
+        alternate_course = "CIS" + selected_course[2:]
+
+
+    cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}') OR (course = '{alternate_course}')")
     courses = cursor.fetchall()
-    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}')")
+    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}') OR (course = '{alternate_course}')")
     reviews = cursor.fetchall()
 
     print(reviews)
