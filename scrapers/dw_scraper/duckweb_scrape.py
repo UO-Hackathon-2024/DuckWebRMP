@@ -1,118 +1,98 @@
 import requests
 from bs4 import BeautifulSoup
+import json
 
 
 duckweb_url = 'https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202401&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&sel_subj=CS&sel_crse=&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a&submit_btn=Show+Classes'
-#prac_url = 'https://www.python.org'
-
-
-response = requests.get(duckweb_url)
-#prac = requests.get(prac_url)
-
-duck_json = BeautifulSoup(response.text, 'html.parser')
-#print(duck_json)
-
-#<td rowspan="1" nowrap="nowrap" class="dddefault" width="110">Flores J</td>
-
-#----------------------------GET THE DATA -----------------------------------------------------
 
 
 
-teacher_name = duck_json.find_all('td',  attrs={'width': '110', 'rowspan': '1'})
-class_names = duck_json.find_all('td', attrs={'colspan':"6"})
+
+def main(): 
+    response = requests.get(duckweb_url)
+    duck_response = BeautifulSoup(response.text, 'html.parser')
+    courses = search_through_subj_urls(duck_response) 
+
+    courses = remove_labs(courses)
+    courses = remove_2man_labs(courses)
+    courses = remove_independent(courses)
+
+    prof_dict = add_to_dictionary(courses)
+
+    with open('profs.json', 'w') as file:
+        json.dump(prof_dict, file)
+
+
+
 
 
 #------------------------------Turn data into list-----------------------------------------------------
 
-classes_stored = []
-
-for prof in teacher_name:
-    #print(prof)
-    #print(prof.text)
-    prof_class = prof.find_parent('tr')
-    #print(prof_class)
-    #print(prof_class.text.replace('\n', ' '))
-    #print(prof_class.text.replace('\n', '|').replace('\xa0',''))
-    #print(prof_class.text.replace('\n', '|').replace('\xa0','').split('|'))
-    fixed_prof_class = prof_class.text.replace('\n', '|').replace('\xa0','N/A').split('|')
-    
-    #print(fixed_prof_class)
-
-    fixed_prof_class = list(filter(lambda ele: ele != '', fixed_prof_class))
 
 
-    #print(fixed_prof_class)
-    classes_stored.append(fixed_prof_class)
+def get_subject_urls(response): 
+    # Get the subject names in a list 
+    subject_names = response.find_all('td', attrs={'colspan':"6"})
+    subject_urls = []
+    subjects = []
+    for name in subject_names: 
+        parsed = name.text.replace('\n', '|').replace('\xa0', '')
+        if not parsed[3].isdigit() and not parsed[3] == ' ': 
+            sub = parsed[0] + parsed[1] + parsed[2] + parsed[3]
+            num = parsed[5] + parsed[6] + parsed[7]
+        elif not parsed[2].isdigit() and not parsed[2] == ' ': 
+            sub = parsed[0] + parsed[1] + parsed[2]
+            num = parsed[4] + parsed[5] + parsed[6]
+        else: 
+            sub = parsed[0] + parsed[1]
+            num = parsed[3] + parsed[4] + parsed[5]
 
-#print(classes_stored)
+        sub = sub.replace(" ", "")
+        num = num.replace(" ", "")
 
-#for class names
-
-class_names_stored = []
-map_count = 0
-
-for name in class_names:
-    temp = []
-    #print(name)
-    #print(name.text)
-    #print(name.text.replace('\n', '|')).replace('\xa0','')
-    fixed_class_names = name.text.replace('\n', '|').replace('\xa0','')
-    temp.append(fixed_class_names)
-    temp.append(map_count)
-    class_names_stored.append(temp)
-    map_count += 1
-    name = name.text
-    
-    if not name[3].isdigit() and not name[3] == ' ': 
-        sub = name[0] + name[1] + name[2] + name[3]
-        num = name[5] + name[6] + name[7]
-    elif not name[2].isdigit() and not name[2] == ' ':  
-        sub = name[0] + name[1] + name[2]
-        num = name[4] + name[5] + name[6]
-    else: 
-        sub = name[0] + name[1]
-        num = name[3] + name[4] + name[5]
-    
-    url = f"""https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202304&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj={sub}&sel_crse={num}&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a"""
-
-    #print(sub)
-    #print(num)
-    response = requests.get(url)
-
-    temp_json = BeautifulSoup(response.text, 'html.parser')
-
-    teachers = temp_json.find_all('td',  attrs={'width': '110', 'rowspan': '1'})
-
-    print(teachers)
-
-    for ele in teachers:
+        url = f"""https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202401&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj={sub}&sel_crse={num}&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a"""
         
+        subject_urls.append(url)
+        subjects.append(sub + num)
+    return subject_urls, subjects
 
-        klass = ele.find_parent('tr')
-        fixed_klass = klass.text.replace('\n', '|').replace('\xa0','N/A').split('|')
-        fixed_klass.append(sub + num)
-        print(fixed_klass)
+def search_through_subj_urls(main_response): 
+    course_url_and_courses = get_subject_urls(main_response)
+    course_urls = course_url_and_courses[0]
+    courses = course_url_and_courses[1]
+
+    course_infos = []
+
+    for i in range(len(courses)): 
+
+        print(f"Searching course {i}")
+        response = requests.get(course_urls[i])
+        soup = BeautifulSoup(response.text, 'html.parser')
         
-        classes_stored.append(fixed_klass)
-    
-#print(fixed_klass)
+        teacher_name = soup.find_all('td',  attrs={'width': '110', 'rowspan': '1'})
+
+
+        for prof in teacher_name:
+            prof_class = prof.find_parent('tr')
+            course_info = prof_class.text.replace('\n', '|').replace('\xa0','N/A').split('|')
+        
+            course_info = list(filter(lambda ele: ele != '', course_info))
+            course_info.pop()
+            
+            course_info.append(courses[i])
+
+            course_infos.append(course_info)
+
+    return course_infos
 
 
     
 
 
-#print(class_names_stored)
 
-#for ele in class_names_stored:
-    #print(ele)
-
-#print(len(class_names_stored))
 
 #-------------------------------------FILTER CLASSES WE WANT -------------------------------------------------
 
-#print(classes_stored)
-
-#print(len(classes_stored))
 
 def remove_labs(li):
 
@@ -124,10 +104,7 @@ def remove_labs(li):
 
     return lab_free
 
-lab_free = remove_labs(classes_stored)
 
-#for ele in lab_free:
-#    print(ele)
 
 
 def remove_2man_labs(li):
@@ -141,12 +118,8 @@ def remove_2man_labs(li):
     
     return temp
 
-lab_free = remove_2man_labs(lab_free)
 
-print(len(lab_free))
 
-#for klass in lab_free:
-    #print(klass, len(klass))
 
 
 
@@ -156,21 +129,17 @@ def map_lab_free_classes(li):
 
     for ele in li:
         ele.append(count)
-        print(ele)
         count += 1
     pass
 
-#map_lab_free_classes(lab_free)
 
 def add_names(class_names, classes):
 
     for ele in range(len(class_names)):
         classes[ele].append(class_names[ele][0])
-        print(ele)
 
     return classes
 
-#add_names(class_names_stored,lab_free)
 
 
 def remove_independent(li):
@@ -183,49 +152,43 @@ def remove_independent(li):
 
     return indy_free
 
-lab_and_indy_free = remove_independent(lab_free)
-
-#print(len(lab_and_indy_free))
-
-#for klass in lab_and_indy_free:
-    #print(klass, len(klass))
 
 
 
 
-def remove_extra(li=list[list]):
+def add_to_dictionary(course_names=list[list]):
+    prof_dict = {}
 
-    temp = []
+    for course in course_names: 
+        if len(course) >= 9: 
+            crn = course[1]
+            avail = course[2]
+            time = course[4]
+            day = course[5]
+            location = course[6]
+            name = course[7]
+            course_title = course[8]
+        else: 
+            continue
 
-    for ele in li:
-        #print(ele, len(ele))
-        if len(ele) == 9:
-            temp.append(ele)
-        
-    return temp
-
-lab_and_indy_and_research_free = remove_extra(lab_and_indy_free)
-
-#print(len(lab_and_indy_and_research_free))
-
-#for klass in lab_and_indy_and_research_free:
-    #print(klass,len(klass))
-
-
-def add_to_dictionary(cnames=list[list], teachers=list[list]):
-
-    stored = {}
-    # { michal: {crn; 3, hours: 4"}, hank: {crn : 3, hours:4}, willis: {crn:3, hours:4} }
-
-    for ele in teachers:
-        stored[ele[7]] = 1
-
-    return stored
+        prof_dict[name] = {"crn": crn, "avail": avail, "time": time, "day": day, location:"location",  
+                           "course_title":course_title }
+    return prof_dict
 
 
-#print(add_to_dictionary(class_names_stored, lab_and_indy_and_research_free))
+
+
+
+
+
+
+
+
+
         
         
+if __name__ == "__main__": 
+    main()
 
 
 
@@ -237,21 +200,6 @@ def add_to_dictionary(cnames=list[list], teachers=list[list]):
 
 
 
-
-
-'''
-cs314: {
-        hank; {
-        "hours": 3
-        }
-
-        michal{
-        hours: 3
-        
-        }
-
-}
-'''
 
 
 

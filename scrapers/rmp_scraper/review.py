@@ -29,12 +29,16 @@ class Review:
 
     def get_comment(self): 
         return self.__comment
+
     def get_quality(self): 
         return self.__quality
+
     def get_difficulty(self): 
         return self.__difficulty
+    
     def get_course(self): 
         return self.__course
+    
     def get_prof(self): 
         return self.__prof
 

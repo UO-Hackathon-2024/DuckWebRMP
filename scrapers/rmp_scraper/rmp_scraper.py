@@ -13,27 +13,25 @@ import time
 from review import Review 
 from review_to_database import insert_review
 
-# ---- Debug Logging --- 
 import logging as log 
+import json
+from errors import NoProfFound
+
 log.basicConfig(
     level=log.INFO,  # Set the minimum logging level
     format='%(asctime)s - %(levelname)s - %(message)s'  # Format of the log messages
 )
 
-import json
-from errors import NoProfFound
-
 
 def main(): 
-    with open('test.json', 'r') as file: 
+    with open('../dw_scraper/profs.json', 'r') as file: 
         course_data = json.load(file)
-    for course in course_data: 
-        for prof in course_data[course]: 
-            try: 
-                scrape_prof_reviews(prof)
-            except Exception as e: 
-                log.info(e)
-                continue
+    for prof in course_data: 
+        try: 
+            scrape_prof_reviews(prof)
+        except Exception as e: 
+            log.info(e)
+            continue
 
     
 def scrape_prof_reviews(prof: str): 
@@ -45,19 +43,17 @@ def scrape_prof_reviews(prof: str):
     driver.get(url)
 
     try: 
+        driver.set_page_load_timeout(20)
 
         #loop thorugh the links and find the professor at the university of oregon 
         link_elements = driver.find_elements(By.XPATH, "//a[starts-with(@href, '/professor/') and contains(@href, '')]")
-        uo_prof_found = False
         for link_element in link_elements: 
-            school = link_element.find_element(By.XPATH, "//*[starts-with(@class, 'CardSchool__School')]").text
-            if school == "University of Oregon":
+            try: 
                 link = link_element.get_attribute("href")
                 driver.get(link) #use the link of the uo prof 
-                uo_prof_found = True
-                break
-        if (not uo_prof_found): 
-            raise NoProfFound("No professor found")
+            except Exception as e: 
+                continue
+            
 
 
         #find the elements from the reviews
@@ -74,17 +70,16 @@ def scrape_prof_reviews(prof: str):
 
             #Set values to the review object
             review.set_prof(prof)
-            review.add_comment(comments[i].text)
+            review.set_comment(comments[i].text)
             review.set_quality(ratings[ratings_i].text)
             review.set_difficulty(ratings[ratings_i + 1].text)
             review.set_course(courses[i].text)
 
             insert_review(review)
-            log.info(review)
 
             i += 1
             ratings_i += 2
-
+        log.info(review)
     except Exception as e: 
         raise e
     finally: 
@@ -96,7 +91,7 @@ def prof_to_url(prof: str) -> str:
     name = prof.split()
     first_name = name[0]
     last_name = name[1]
-    return f"https://www.ratemyprofessors.com/search/professors?q={first_name}%20{last_name}"
+    return f"https://www.ratemyprofessors.com/search/professors/1261?q={first_name}%20{last_name}"
 
 
 
