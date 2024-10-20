@@ -106,15 +106,18 @@ def get_courses():
         
 @app.route('/mycourses', methods=['POST'])
 def get_my_courses(): 
-    course = request.form.get('my_course')
-    if course:
+    course_response = request.form.get('my_course')
+    course = course_response[1]
+    action = course_response[0]
+    if action = "ADD" and course:
         course = ast.literal_eval(course)
         if 'my_courses' not in session:
             session['my_courses'] = []
         session['my_courses'].append(course)
         session.modified = True
+    else: 
+        session['my_courses'].pop(course)
     my_courses = session.get('my_courses', [])
-    print(my_courses)
     return render_template('mycourses.html', my_courses=my_courses)
 
 

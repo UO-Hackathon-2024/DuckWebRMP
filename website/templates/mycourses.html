@@ -21,7 +21,11 @@
     </div>
 
     {% for course in my_courses %}
+    
     <div class="select">
+	<form action="/mycourses" method="POST">
+		<input type="hidden" name="my_course" value="{{ ('REMOVE', course) }}">
+		<button type="submit">Remove Course</button>
 	<table border="1">
 	    <thead>
 		<tr>
@@ -39,7 +43,7 @@
 		    <td>{{course.Professor}}</td>
 		    <td>{{course.day}}</td>
 		    <td>{{course.time}}</td>
-		    <td>{{course.Location}}</td>
+		    <td>{{course.room}}</td>
 		    <td>{{course.crn}}</td>
 		</tr>
 	    </tbody>
