@@ -15,7 +15,7 @@
       <img src ="../static/images/duckLogo.png" width="200" height = "150" >
     </div>
 
-    {% for review in reviews%}
+    {% for course in courses%}
     <div class="select">
 	<table border="1">
 	    <thead>
@@ -26,15 +26,40 @@
 		    <th>Time</th>
 		    <th>Location</th>
 		    <th>CRN</th>
-		    <th>test</th>
 		</tr>
 	    </thead>
 	    <tbody>
 		<tr>
-		    <td>{{review.comment}}</td>
+		    <td>{{course.course}}</td>
+		    <td>{{course.Professor}}</td>
+		    <td>{{course.day}}</td>
+		    <td>{{course.time}}</td>
+		    <td>{{course.room}}</td>
+		    <td>{{course.crn}}</td>
 		</tr>
 	    </tbody>
 	</table>
+	<table border="1">
+	    <thead>
+		<tr>
+		    <th>Comments</th>
+		    <th>Rating</th>
+		    <th>Difficulty</th>
+		</tr>
+	    </thead>
+	    {% for review in reviews %}
+		{% if review.professor_name == course.Professor %}
+		<tbody>
+		    <tr>
+			<td>{{review.comment}}</td>
+			<td>{{course.rating}}</td>
+			<td>{{course.difficulty_rating}}</td>
+		    </tr>
+		</tbody>
+		{% endif %}
+	    {% end for %}
+	</table>
+		
 
     </div>
     {% endfor %}
