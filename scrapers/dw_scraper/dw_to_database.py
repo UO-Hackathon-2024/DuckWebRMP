@@ -49,8 +49,11 @@ def insert_info(course_info: dict):
                       ('{prof_name}', '{prof_info["day"][i]}', '{prof_info["time"][i]}'
                        , '{prof_info["course_title"][i]}', '{prof_info["location"][i]}', '{prof_info["crn"][i]}') """
 
-                connection.cursor().execute(sql)
-                connection.commit()
+                try: 
+                    connection.cursor().execute(sql)
+                    connection.commit()
+                except Exception as e: 
+                    continue
     except Exception as e: 
         print("Could not execute sql", e)
     finally:

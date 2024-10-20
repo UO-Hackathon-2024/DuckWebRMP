@@ -65,9 +65,6 @@ def search_through_subj_urls(main_response):
 
     for i in range(len(courses)): 
 
-        if i == 10: 
-            return course_infos
-
         print(f"Searching course {i}")
         response = requests.get(course_urls[i])
         soup = BeautifulSoup(response.text, 'html.parser')
