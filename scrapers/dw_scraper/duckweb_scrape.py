@@ -64,18 +64,26 @@ map_count = 0
 for name in class_names:
     temp = []
     #print(name)
-    #print(name.text)
-    #print(name.text.replace('\n', '|').replace('\xa0',''))
-    fixed_class_names = name.text.replace('\n', '|').replace('\xa0','')
-    temp.append(fixed_class_names)
-    temp.append(map_count)
-    class_names_stored.append(temp)
-    map_count += 1
+    print(name.text)
+    #print(name.text.replace('\n', '|')).replace('\xa0',''))
+    #fixed_class_names = name.text.replace('\n', '|').replace('\xa0','')
+    #temp.append(fixed_class_names)
+    #temp.append(map_count)
+    #class_names_stored.append(temp)
+    #map_count += 1
+
+    sub = name[0] + name[1] 
+    num = name[]
+
+    
+f'https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202304&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj={sub}&sel_crse=101&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a
+'
+
 
 #print(class_names_stored)
 
-for ele in class_names_stored:
-    print(ele)
+#for ele in class_names_stored:
+    #print(ele)
 
 #print(len(class_names_stored))
 
@@ -141,7 +149,7 @@ def add_names(class_names, classes):
 
     return classes
 
-add_names(class_names_stored,lab_free)
+#add_names(class_names_stored,lab_free)
 
 
 def remove_independent(li):
