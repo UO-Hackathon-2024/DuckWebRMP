@@ -1,3 +1,6 @@
+'''
+#uncomment everything and it should work, i was missing some reliant libraries and don't want to install
+
 import time
 import schedule
 
@@ -22,3 +25,4 @@ schedule.every(24).hours.do(dw_scraper)
 while True:
     schedule.run_pending()
     time.sleep(10)
+'''
