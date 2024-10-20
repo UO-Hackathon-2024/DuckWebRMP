@@ -16,6 +16,15 @@ duck_json = BeautifulSoup(response.text, 'html.parser')
 
 #----------------------------GET THE DATA -----------------------------------------------------
 
+def find_all_teachers_by_subject() -> list:
+    
+    teacher_name = duck_json.find_all('td',  attrs={'width': '110', 'rowspan': '1'})
+    li = []
+    for teach in teacher_name:
+        li.append(prof_class.text.replace('\n', ' '))
+
+    return li    
+
 
 
 teacher_name = duck_json.find_all('td',  attrs={'width': '110', 'rowspan': '1'})
