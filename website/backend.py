@@ -36,8 +36,9 @@ def home():
     "Gupta S", "Nguyen T", "Wang Y", "Wilson C", "Choi J", 
     "Rejaie R", "Hornof A", "Gupta S", "Nguyen T", "Hou T", 
     "Li J"
-    ]
-    return render_template('home.html',courses=courses, profs = profs) #the list courses is being passed to the html as a variable
+    ] 
+
+    return render_template('home.html',courses=courses, profs= profs, my_courses=my_courses) #the list courses is being passed to the html as a variable
 
 
 
@@ -97,6 +98,25 @@ def get_courses():
     connection.close()
 
     return render_template('courses.html', courses=courses, reviews=reviews)
+
+@app.route('/add_course', methods=['POST'])
+def add_course(course):
+    if course:
+        if 'courses' not in session:
+            session['my_courses'] = []
+        session['my_courses'].append(course))
+        session.modified = True
+        return jsonify(success=True, courses=session['my_courses'])
+
+@app.route('/mycourses', methods=['GET'])
+def get_my_courses(): 
+
+    courses = session.get('my_courses', [])
+    return render_template('mycourses.html', my_courses=my_courses)
+
+
+
+
 
 
 
