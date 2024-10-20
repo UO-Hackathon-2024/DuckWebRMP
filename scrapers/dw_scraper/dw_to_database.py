@@ -45,9 +45,9 @@ def insert_info(course_info: dict):
             prof_info = course_info[prof_name]
             
 
-            sql = f"""INSERT INTO reviews (Professor, day, time, course, room, crn) VALUES 
-                  ('{prof_name}', '{prof_info["day"]}', {prof_info["time"]}
-                   , {prof_info["course_title"]}, '{prof_info["location"]}', '{prof_info["crn"]}') """
+            sql = f"""INSERT INTO duckwebscraper (professor, day, time, course, room, crn) VALUES 
+                  ('{prof_name}', '{prof_info["day"]}', '{prof_info["time"]}'
+                   , '{prof_info["course_title"]}', '{prof_info["location"]}', '{prof_info["crn"]}') """
 
             connection.cursor().execute(sql)
             connection.commit()
