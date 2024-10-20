@@ -44,13 +44,13 @@ def insert_info(course_info: dict):
         for prof_name in course_info: 
             prof_info = course_info[prof_name]
             
+            for i in range(len(prof_info["day"])): 
+                sql = f"""INSERT INTO duckwebscraper (professor, day, time, course, room, crn) VALUES 
+                      ('{prof_name}', '{prof_info["day"][i]}', '{prof_info["time"][i]}'
+                       , '{prof_info["course_title"][i]}', '{prof_info["location"][i]}', '{prof_info["crn"][i]}') """
 
-            sql = f"""INSERT INTO duckwebscraper (professor, day, time, course, room, crn) VALUES 
-                  ('{prof_name}', '{prof_info["day"]}', '{prof_info["time"]}'
-                   , '{prof_info["course_title"]}', '{prof_info["location"]}', '{prof_info["crn"]}') """
-
-            connection.cursor().execute(sql)
-            connection.commit()
+                connection.cursor().execute(sql)
+                connection.commit()
     except Exception as e: 
         print("Could not execute sql", e)
     finally:

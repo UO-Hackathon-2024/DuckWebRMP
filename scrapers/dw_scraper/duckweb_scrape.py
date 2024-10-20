@@ -65,6 +65,9 @@ def search_through_subj_urls(main_response):
 
     for i in range(len(courses)): 
 
+        if i == 10: 
+            return course_infos
+
         print(f"Searching course {i}")
         response = requests.get(course_urls[i])
         soup = BeautifulSoup(response.text, 'html.parser')
@@ -154,8 +157,6 @@ def remove_independent(li):
 
 
 
-
-
 def add_to_dictionary(course_names=list[list]):
     prof_dict = {}
 
@@ -171,8 +172,20 @@ def add_to_dictionary(course_names=list[list]):
         else: 
             continue
 
-        prof_dict[name] = {"crn": crn, "avail": avail, "time": time, "day": day, "location":location,  
-                           "course_title":course_title }
+        if name not in prof_dict: 
+            prof_dict[name] = {"crn": [crn], "avail": [avail], "time": [time], "day": [day], "location":[location],  
+                               "course_title":[course_title] }
+        else: 
+            prof = prof_dict[name]
+            prof["crn"].append(crn)
+            prof["avail"].append(avail)
+            prof["time"].append(time)
+            prof["day"].append(day)
+            prof["location"].append(location)
+            prof["course_title"].append(course_title)
+
+
+
     return prof_dict
 
 
