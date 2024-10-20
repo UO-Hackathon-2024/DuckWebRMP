@@ -15,43 +15,34 @@
       <img src ="../static/images/duckLogo.png" width="200" height = "150" >
     </div>
 
+    {% for course in courses %}
     <div class="select">
 	<table border="1">
 	    <thead>
 		<tr>
+		    <th>Course</th>
 		    <th>Professor</th>
+		    <th>Day</th>
+		    <th>Time</th>
 		    <th>Location</th>
+		    <th>CRN</th>
 		</tr>
 	    </thead>
 	    <tbody>
-		{% for course in courses %}
 		<tr>
-		    <td>{{ course.Professor }}</td>
+		    <td>{{ course.course }}</td>
+		    <td>{{ course.professor }}</td>
+		    <td>{{ course.day }}</td>
+		    <td>{{ course.time }}</td>
 		    <td>{{ course.room }}</td>
+		    <td>{{ course.crn }}</td>
 		</tr>
-		{% endfor %}
 	    </tbody>
 	</table>
 
     </div>
-    <div class="select">
-	<table border="1">
-	    <thead>
-		<tr>
-		    <th>Professor</th>
-		    <th>Location</th>
-		</tr>
-	    </thead>
-	    <tbody>
-		{% for course in courses %}
-		<tr>
-		    <td>{{ course.Professor }}</td>
-		    <td>{{ course.room }}</td>
-		</tr>
-		{% endfor %}
-	    </tbody>
-	</table>
-    </div> 
+    {% endfor %}
+
   </div>
 </body>
 </html>
