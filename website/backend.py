@@ -125,7 +125,6 @@ def get_my_courses():
 
 
 
-
 if __name__ == '__main__':
     app.run(debug=True)
 
