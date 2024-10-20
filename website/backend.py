@@ -7,7 +7,7 @@ import ast
 
 # Initialize the app
 app = Flask(__name__)
-app.secret_key = "testing"
+app.secret_key = "secret"
 
 db_config = {
     'host': 'localhost',
