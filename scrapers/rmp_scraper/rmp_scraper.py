@@ -74,7 +74,7 @@ def scrape_prof_reviews(prof: str):
 
             #Set values to the review object
             review.set_prof(prof)
-            review.add_comment(comments[i].text)
+            review.set_comment(comments[i].text)
             review.set_quality(ratings[ratings_i].text)
             review.set_difficulty(ratings[ratings_i + 1].text)
             review.set_course(courses[i].text)
