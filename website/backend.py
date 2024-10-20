@@ -6,6 +6,19 @@ from flask_sqlalchemy import SQLAlchemy
 # Initialize the app
 app = Flask(__name__)
 
+db_config = {
+    'host': 'localhost',
+    'user': 'kai',
+    'password': 'hack_24',
+    'database': 'professor_table'
+}
+
+
+
+
+
+
+
 # Define a route
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -31,10 +44,21 @@ def home():
      
 
 # Run the app
-@app.route('/subject_selection', methods=['POST'])
-def submit_selection():
-    selected_subject = request.form['subject']
-    return f'You Picked: {selected_subject}'
+@app.route('/courses', methods=['GET'])
+def get_all_courses():
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM duckwebscraper")
+    courses.fetchall()
+
+    cursor.close()
+    connection.close()
+
+    return render_template('courses.html', courses=courses)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
