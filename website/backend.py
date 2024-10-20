@@ -56,8 +56,7 @@ def get_courses():
     cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}')")
     reviews = cursor.fetchall()
 
-    print(courses)
-    
+    print(reviews)
 
     cursor.close()
     connection.close()
