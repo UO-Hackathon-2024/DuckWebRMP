@@ -11,6 +11,7 @@ import time
 
 # ---- Review Class ----
 from review import Review 
+from review_to_database import insert_review
 
 # ---- Debug Logging --- 
 import logging as log 
@@ -68,7 +69,6 @@ def scrape_prof_reviews(prof: str):
         i = 0
         ratings_i = 0
 
-        reviews = []
         while(i < len(comments)): 
             review = Review()
 
@@ -79,7 +79,7 @@ def scrape_prof_reviews(prof: str):
             review.set_difficulty(ratings[ratings_i + 1].text)
             review.set_course(courses[i].text)
 
-            reviews.append(review)
+            insert_review(review)
             log.info(review)
 
             i += 1
