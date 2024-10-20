@@ -118,7 +118,7 @@ def get_my_courses():
     elif action == 0: 
         for i in range(len(session['my_courses'])): 
             if course['crn'] == session['my_courses'][i]['crn']:
-                print(f"Removing {session['my_courses']}")
+                print(f"Removing {session['my_courses'][i]['crn']}")
                 session['my_courses'].pop(i)
                 break 
     my_courses = session.get('my_courses', [])
