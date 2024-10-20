@@ -16,9 +16,22 @@
     </div>
 
     <div class="select">
-
-
-
+	<table border="1">
+	    <thead>
+		<tr>
+		    <th>Professor</th>
+		    <th>Location</th>
+		</tr>
+	    </thead>
+	    <tbody>
+		{% for course in courses %}
+		<tr>
+		    <td>{{ course.professor }}</td>
+		    <td>{{ course.room }}</td>
+		</tr>
+		{% endfor %}
+	    </tbody>
+	</table>
 
     </div>
   </div>
