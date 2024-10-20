@@ -1,4 +1,5 @@
 body {
+    background-color: rgba(255, 255, 255, 0.8); 
     background-image: url('../images/Duck_Pose.jpg'); /* Relative path to your image */
     background-size: cover; /* Ensure the image covers the entire background *//* Centers the image */
     background-repeat: no-repeat; /* Avoid repeating the image */
@@ -11,17 +12,18 @@ h1 {
 
 .majorSelect  { 
   font-weight: bold;
-  color: orange; 
+  color: black; 
 }
 
 .select {
   margin: auto; 
-  width: 45%; 
+  width: 30%;
   padding: 20px; 
   background-color: rgba(255, 255, 255, 0.8); 
   border-radius: 30px; /* rounded corners */
   text-align: center; 
   margin-top: 80 px;
+  font-family: monospace;
 }
 
 #duckLogo {
@@ -35,3 +37,9 @@ img {
   max-width: 100%;
   height: auto;
 }
+
+.forms{
+  border-radius: 30px;
+  font-family: monospace;
+}
+

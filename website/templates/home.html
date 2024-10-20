@@ -9,47 +9,49 @@
   <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </head>
 <body>
+  <div id="background">
 
-  <div id="duckLogo">
-    <img src ="../static/images/duckLogo.png" width="200" height = "150" >
-  </div>
+    <div id="duckLogo">
+      <img src ="../static/images/duckLogo.png" width="200" height = "150" >
+    </div>
 
-  <div class="select">
+    <div class="select">
 
-    <form name="form1" method="POST" action="/subject-selection">
+      <form name="form1" method="POST" action="/subject-selection">
 
-      <label for="subject" class ="majorSelect"> Choose a Major: </label>
+        <label for="subject" class ="majorSelect"> Select a Major: </label>
 
-      <select name = "subject" id="subject" name="subject">
-        <option value = "Computer Science">Computer Science</option>
-        <option value = "Business Administration">Business Administration</option>
-        <option value= "Psychology">Psychology</option>
-      </select>
+        <select name = "subject" id="subject" class="forms">
+          <option value = "Computer Science">Computer Science</option>
+          <option value = "Business Administration">Business Administration</option>
+          <option value= "Psychology">Psychology</option>
+        </select>
 
-      <br>
-      <br>
+        <br>
+        <br>
 
-      <label for="courses" class ="majorSelect"> Choose a Class: </label>
+        <label for="courses" class ="majorSelect"> Select a Class: </label>
 
-      <select name="courses" id = courses>
-        {%for courses in courses%} 
-        <!-- used Jinja2 to loop through the courses list. Each item becomes a new option.-->
-          <option value="{{ courses }}">{{ courses }}</option> 
-        {%endfor%}
-      </select>
-      
-      <br>
-      <br>
-      <label for="prof" class = 'majorSelect'> Choose a Proffessor</label>
-      <select id="prof">
-        {%for profs in profs%}
-        <option value = "{{profs}}"> {{profs}} </option>
-        {%endfor%}
-      </select>
-      <br>
-      <br>
-      <input type="submit" value="Submit">
-    </form>
+        <select name="courses" id = courses class="forms">
+          {%for courses in courses%} 
+          <!-- used Jinja2 to loop through the courses list. Each item becomes a new option.-->
+            <option value="{{ courses }}">{{ courses }}</option> 
+          {%endfor%}
+        </select>
+
+        <br>
+        <br>
+        <label for="prof" class = 'majorSelect'> Select a Professor: </label>
+        <select name ='prof' id="prof" class="forms">
+          {%for profs in profs%}
+          <option value = "{{profs}}"> {{profs}} </option>
+          {%endfor%}
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Submit" class = "forms">
+      </form>
+    </div>
   </div>
 </body>
 </html>
