@@ -20,7 +20,7 @@ def create_connection():
             database='professor_table' # The database you want to access)
         )
 
-        print("Connection to MySQL DB successful")
+
     except Error as e:
         print(f"The error '{e}' occurred")
 
@@ -34,11 +34,11 @@ def insert_review(review: Review):
     try: 
         sql = f"""INSERT INTO reviews (comment, professor_name, rating, difficulty_rating, class) VALUES 
               ('{review.get_comment()}', '{review.get_prof()}', {review.get_quality()}, {review.get_difficulty()}, '{review.get_course()}') """
-        print(sql)
+
         connection.cursor().execute(sql)
         connection.commit()
     except Exception as e: 
-        print("Could not execute sql", e)
+        print("Review already exists")
     finally:
         if connection.is_connected():
             cursor.close()
