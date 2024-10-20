@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template, request, session, jsonify
 import mysql.connector
+import ast
 
 
 
@@ -107,6 +108,7 @@ def get_courses():
 def get_my_courses(): 
     course = request.form.get('my_course')
     if course:
+        course = ast.literal_eval(course)
         if 'my_courses' not in session:
             session['my_courses'] = []
         session['my_courses'].append(course)
