@@ -48,7 +48,7 @@
 		</tr>
 	    </thead>
 	    {% for review in reviews %}
-		{% if review.professor_name == course.Professor %}
+		{% if review.professor_name == course.Professor and review.comment %}
 		<tbody>
 		    <tr>
 			<td>{{review.comment}}</td>
