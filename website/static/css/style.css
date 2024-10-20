@@ -16,14 +16,21 @@ h1 {
 }
 
 nav { 
-    display: inline-block;
+   
     background-color: rgba(255, 255, 255, 0.8); 
     margin: 10px; 
-    width: 30px; 
-    height: 20px; 
+    width: 180px; 
+    height: 25px; 
+    font-family: monospace;
+    text-align: center;
+    border-radius: 30px; /* rounded corners */
+    font-size: 16px;
+
     
 }
-
+nav a{
+  text-decoration: none;
+}
 .select {
   margin: auto; 
   width: 30%;
@@ -34,6 +41,16 @@ nav {
   margin-top: 80 px;
   font-family: monospace;
 }
+
+.course{
+  width: 65%;
+}
+
+th { 
+  width: 100%;
+}
+
+
 
 #duckLogo {
   display: flex;

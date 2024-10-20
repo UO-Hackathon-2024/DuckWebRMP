@@ -22,7 +22,7 @@
 
     {% for course in my_courses %}
     
-    <div class="select">
+    <div class="select course">
 	<form action="/mycourses" method="POST">
 		<input type="hidden" name="my_course" value="{{ (0, course) }}">
 		<button type="submit">Remove Course</button>

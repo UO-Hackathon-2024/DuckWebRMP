@@ -107,9 +107,14 @@ def get_courses():
 
 
         
-@app.route('/mycourses', methods=['POST'])
+@app.route('/mycourses', methods=['POST', 'GET'])
 def get_my_courses(): 
+
     course_response = request.form.get('my_course')
+    if not course_response: 
+        my_courses = session.get('my_courses', [])
+        return render_template('mycourses.html', my_courses=my_courses)
+
     course_response = ast.literal_eval(course_response)
     course = course_response[1]
     action = course_response[0]

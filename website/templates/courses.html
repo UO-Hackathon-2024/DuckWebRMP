@@ -11,7 +11,7 @@
 <body>
 
   <nav> 
-      <a href="/">Home</a>
+      <a href="/">Home -</a>
       <a href="/mycourses">My Courses</a>
   </nav> 
 
@@ -24,7 +24,7 @@
     </div>
 
     {% for course in courses%}
-    <div class="select">
+    <div class="select course">
 	<table border="1">
 	    <form class="add_course_form" action="/mycourses" method="POST">
 			<input type="hidden" name="my_course" value="{{ (1, course) }}">
@@ -74,11 +74,10 @@
 	    {% endfor %}
 	</table>
     </div>
+	<br>
     {% endfor %}
 
-    <div id="responseMessage">
-	<p>Course Added</p>
-    </div>
+   
 
 
   </div>
