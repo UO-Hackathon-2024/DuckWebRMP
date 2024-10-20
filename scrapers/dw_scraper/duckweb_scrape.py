@@ -72,12 +72,25 @@ for name in class_names:
     #class_names_stored.append(temp)
     #map_count += 1
 
-    sub = name[0] + name[1] 
-    num = name[]
+    if not name[3].isdigit() and not name[3] == ' ': 
+        sub = name[0] + name[1] + name[2] + name[3]
+        num = name[5] + name[6] + name[7]
+    elif not name[2].isdigit() and not name[2] == ' ':  
+        sub = name[0] + name[1] + name[2]
+        num = name[4] + name[5] + name[6]
+    else: 
+        sub = name[0] + name[1]
+        num = name[3] + name[4] + name[5]
+    
+    url = f"""https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202304&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj={sub}&sel_crse=101&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a"""
 
     
-f'https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202304&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj={sub}&sel_crse=101&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a
-'
+
+
+
+
+
+    
 
 
 #print(class_names_stored)
