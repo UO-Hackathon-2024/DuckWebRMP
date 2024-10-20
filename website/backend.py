@@ -112,6 +112,7 @@ def get_my_courses():
         session['my_courses'].append(course)
         session.modified = True
     my_courses = session.get('my_courses', [])
+    print(my_courses)
     return render_template('mycourses.html', my_courses=my_courses)
 
 
