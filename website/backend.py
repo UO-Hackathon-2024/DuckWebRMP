@@ -53,7 +53,7 @@ def get_courses():
 
     cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course.replace(" ", "")}')")
     courses = cursor.fetchall()
-    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}')")
+    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course.replace(" ", "")}')")
     reviews = cursor.fetchall()
 
     print(courses)
