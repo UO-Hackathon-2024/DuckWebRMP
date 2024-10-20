@@ -171,7 +171,7 @@ def add_to_dictionary(course_names=list[list]):
         else: 
             continue
 
-        prof_dict[name] = {"crn": crn, "avail": avail, "time": time, "day": day, location:"location",  
+        prof_dict[name] = {"crn": crn, "avail": avail, "time": time, "day": day, "location":location,  
                            "course_title":course_title }
     return prof_dict
 
