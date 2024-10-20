@@ -113,6 +113,11 @@ def get_my_courses():
     if action == 1 and course:
         if 'my_courses' not in session:
             session['my_courses'] = []
+        for my_course in session['my_courses']: 
+            if course["crn"] == my_course["crn"]: 
+                my_courses = session.get('my_courses', [])
+                return render_template('mycourses.html', my_courses=my_courses)
+
         session['my_courses'].append(course)
         session.modified = True
     elif action == 0: 
