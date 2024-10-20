@@ -14,17 +14,17 @@ def create_connection():
     connection = None
     try:
         connection = mysql.connector.connect(
-            host=os.getenv("HOST"),
-            user=os.getenv("USER"),
-            password=os.getenv("PASSWORD"),
-            database=os.getenv("DATABASE")
+            host='localhost',         # Your MySQL server host
+            user='kai',     # Your MySQL username
+            password='hack_24',  # Your MySQL password
+            database='professor_table' # The database you want to access)
         )
+
         print("Connection to MySQL DB successful")
     except Error as e:
         print(f"The error '{e}' occurred")
 
     return connection
-
 
 
 def insert_review(review: Review): 
