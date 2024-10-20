@@ -26,9 +26,9 @@
     {% for course in courses%}
     <div class="select">
 	<table border="1">
-	    <form id="add_course_form" action="/add_course" method="POST">
-		<input type="hidden" name="my_course" value="{{ course }}">
-		<button type="submit">Add Course</button>
+	    <form class="add_course_form" action="/mycourses" method="POST">
+			<input type="hidden" name="my_course" value="{{ course }}">
+			<button type="submit">Add Course</button>
 	    </form>
 	    
 
@@ -83,27 +83,5 @@
 
   </div>
 </body>
-<script>
-        document.getElementById('add_course_form').addEventListener('submit', function(event) {
-            event.preventDefault();  // Prevent the form from submitting the traditional way
 
-            const formData = new FormData(this);
-            fetch('/add_course', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                const messageDiv = document.getElementById('responseMessage');
-                if (data.status === 'success') {
-                    messageDiv.textContent = data.message;  // Show success message
-                } else {
-                    messageDiv.textContent = data.message;  // Show error message
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
-    </script>
 </html>

@@ -101,20 +101,16 @@ def get_courses():
 
     return render_template('courses.html', courses=courses, reviews=reviews)
 
-@app.route('/add_course', methods=['POST'])
-def add_course():
+
+        
+@app.route('/mycourses', methods=['POST'])
+def get_my_courses(): 
     course = request.form.get('my_course')
     if course:
         if 'my_courses' not in session:
             session['my_courses'] = []
         session['my_courses'].append(course)
         session.modified = True
-        return 'Course added', 200
-    return 'Error adding course', 400
-        
-@app.route('/mycourses', methods=['GET'])
-def get_my_courses(): 
-
     my_courses = session.get('my_courses', [])
     return render_template('mycourses.html', my_courses=my_courses)
 
