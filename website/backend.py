@@ -8,9 +8,8 @@ app = Flask(__name__)
 
 # Define a route
 @app.route('/')
-@app.route('/<userName>')
-def home(userName="Guest"):
-    return render_template('home.html', name=userName)
+def home():
+    return render_template('home.html')
 
 @app.route('/subject_selection', methods=['POST'])
 def submit_selection():
