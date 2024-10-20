@@ -22,8 +22,21 @@ def main():
     with open('profs.json', 'w') as file:
         json.dump(prof_dict, file)
 
+'''
+
+options for generalize: 
+    
+    loop through all subject acronyms and put into URL
+
+    store into a larger general dictionary and return, try to dump all at once
+
+PROBLEMS WITH UPLOADING TO JASON
+
+'w' overrides everytime 
+'a' expects and list, but data base needs a dict (unless we find work around.)
 
 
+'''
 
 
 #------------------------------Turn data into list-----------------------------------------------------
