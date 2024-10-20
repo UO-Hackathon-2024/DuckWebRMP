@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DUUCK</title>
+  <title>DUUCK Reviews</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  <script src="{{url_for('static', filename='js/script.js')}}"></script>
 </head>
 <body>
 
@@ -14,12 +15,36 @@
   </div>
 
   <div class="select">
-    <form method="POST" action="/subject-selection">
+
+    <form name="form1" method="POST" action="/subject-selection">
+
       <label for="subject" class ="majorSelect"> Choose a Major: </label>
-      <select name = "subject" id="subject">
+
+      <select name = "subject" id="subject" name="subject">
         <option value = "Computer Science">Computer Science</option>
         <option value = "Business Administration">Business Administration</option>
         <option value= "Psychology">Psychology</option>
+      </select>
+
+      <br>
+      <br>
+
+      <label for="courses" class ="majorSelect"> Choose a Class: </label>
+
+      <select name="courses" id = courses>
+        {%for courses in courses%} 
+        <!-- used Jinja2 to loop through the courses list. Each item becomes a new option.-->
+          <option value="{{ courses }}">{{ courses }}</option> 
+        {%endfor%}
+      </select>
+      
+      <br>
+      <br>
+      <label for="prof" class = 'majorSelect'> Choose a Proffessor</label>
+      <select id="prof">
+        {%for profs in profs%}
+        <option value = "{{profs}}"> {{profs}} </option>
+        {%endfor%}
       </select>
       <br>
       <br>
