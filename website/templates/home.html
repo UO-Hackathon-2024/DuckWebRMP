@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DUUCK</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+
+  <div id="duckLogo">
+    <img src ="../static/images/duckLogo.png" width="200" height = "150" >
+  </div>
+
+  <div class="select">
+    <form method="POST" action="/subject-selection">
+      <label for="subject" class ="majorSelect"> Choose a Major: </label>
+      <select name = "subject" id="subject">
+        <option value = "Computer Science">Computer Science</option>
+        <option value = "Business Administration">Business Administration</option>
+        <option value= "Psychology">Psychology</option>
+      </select>
+      <br>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>

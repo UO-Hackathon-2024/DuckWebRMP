@@ -1,0 +1,37 @@
+body {
+    background-image: url('../images/Duck_Pose.jpg'); /* Relative path to your image */
+    background-size: cover; /* Ensure the image covers the entire background *//* Centers the image */
+    background-repeat: no-repeat; /* Avoid repeating the image */
+  }
+  
+h1 {
+  color: #007030;
+  text-align: center;
+}
+
+.majorSelect  { 
+  font-weight: bold;
+  color: orange; 
+}
+
+.select {
+  margin: auto; 
+  width: 45%; 
+  padding: 20px; 
+  background-color: rgba(255, 255, 255, 0.8); 
+  border-radius: 30px; /* rounded corners */
+  text-align: center; 
+  margin-top: 80 px;
+}
+
+#duckLogo {
+  display: flex;
+  justify-content: center; /* Centers the logo horizontally */
+  align-items: flex-start; /* Aligns the logo at the top */
+  height: 30vh; /* Full viewport height */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
