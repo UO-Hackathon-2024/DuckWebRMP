@@ -116,6 +116,7 @@ def get_my_courses():
         session['my_courses'].append(course)
         session.modified = True
     elif action == 0: 
+        print(f"Removing {course}")
         session['my_courses'].remove(course)
     my_courses = session.get('my_courses', [])
     return render_template('mycourses.html', my_courses=my_courses)
