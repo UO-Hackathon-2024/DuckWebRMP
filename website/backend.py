@@ -116,11 +116,11 @@ def get_my_courses():
         session['my_courses'].append(course)
         session.modified = True
     elif action == 0: 
-        for i in range(0, len(session['my_courses'])): 
-            print(i)
+        for i in range(len(session['my_courses'])): 
             if course['crn'] == session['my_courses'][i]['crn']:
                 print(f"Removing {session['my_courses']}")
                 session['my_courses'].pop(i)
+                break 
     my_courses = session.get('my_courses', [])
     return render_template('mycourses.html', my_courses=my_courses)
 
