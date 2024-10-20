@@ -13,7 +13,7 @@ class Review:
         return f"Prof: {self.__prof}, Course: {self.__course}, Quality: {self.__quality}, Difficulty: {self.__difficulty}"
 
     def set_comment(self, comment: str): 
-        self.__comment = comment;
+        self.__comment = comment
 
     def set_quality(self, quality: int):
         self.__quality = quality 
