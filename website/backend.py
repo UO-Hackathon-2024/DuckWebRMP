@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request
 import mysql.connector
 
 
@@ -44,14 +44,16 @@ def home():
      
 
 # Run the app
-@app.route('/courses', methods=['GET'])
-def get_all_courses():
+@app.route('/courses', methods=['POST'])
+def get_courses():
     connection = mysql.connector.connect(**db_config)
     cursor = connection.cursor(dictionary=True)
 
-    cursor.execute("SELECT * FROM duckwebscraper")
+    selected_course = request.form.get('courses') 
+
+    cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}')")
     courses = cursor.fetchall()
-    cursor.execute("SELECT * FROM reviews")
+    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}')")
     reviews = cursor.fetchall()
     
 
