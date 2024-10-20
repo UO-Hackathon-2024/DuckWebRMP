@@ -53,7 +53,7 @@ def get_courses():
     selected_course = request.form.get('courses') 
     selected_prof = request.form.get('prof')
 
-    if selected_course == "None" and selceted_prof == "None": 
+    if selected_course == "None" and selected_prof == "None": 
         cursor.execute(f"SELECT * FROM duckwebscraper")
         courses = cursor.fetchall()
         cursor.execute(f"SELECT * FROM reviews")
@@ -84,10 +84,10 @@ def get_courses():
         alternate_course = ""
         if selected_course.startswith("CS"): 
             alternate_course = "CIS" + selected_course[2:]
-        cursor.execute(f"""SELECT * FROM duckwebscraper WHERE ((course = '{selected_course}') OR (course = '{alternate_course}'))
+        cursor.execute(f"""SELECT * FROM duckwebscraper WHERE (course = '{selected_course}' OR course = '{alternate_course}')
                        AND (Professor = '{selected_prof}')""")
         courses = cursor.fetchall()
-        cursor.execute(f"""SELECT * FROM reviews WHERE ((class = '{selected_course}') OR (class = '{alternate_course}'))
+        cursor.execute(f"""SELECT * FROM reviews WHERE (class = '{selected_course}' OR class = '{alternate_course}')
                        AND (professor_name = '{selected_prof}')""")
         reviews = cursor.fetchall()
 
