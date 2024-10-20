@@ -9,37 +9,94 @@ duckweb_url = 'https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=2
 
 
 def main(): 
+
     response = requests.get(duckweb_url)
+    
     duck_response = BeautifulSoup(response.text, 'html.parser')
-    courses = search_through_subj_urls(duck_response) 
+    
+    acros = get_all_acronyms(duck_response)
+
+    print(acros)
+    
+    i = 0
+    """
+    response = requests.get('''https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202401&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj=AAAP&sel_crse=&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a''')
+        
+    duck_response = BeautifulSoup(response.text, 'html.parser')
+
+    
+    courses = search_through_subj_urls(duck_response)
+
+    print(courses) 
 
     courses = remove_labs(courses)
+    print(courses)
     courses = remove_2man_labs(courses)
+    print(courses)
     courses = remove_independent(courses)
+    print(courses)
 
     prof_dict = add_to_dictionary(courses)
+    print(prof_dict)
+    """
 
-    with open('profs.json', 'w') as file:
-        json.dump(prof_dict, file)
-
-'''
-
-options for generalize: 
+    for ele in acros:
+        #print(ele)
     
-    loop through all subject acronyms and put into URL
+        if i == 2:
+            break
+    
+        duckweb_url2 = f'''https://duckweb.uoregon.edu/duckweb/hwskdhnt.P_ListCrse?term_in=202401&sel_subj=dummy&sel_day=dummy&sel_schd=dummy&sel_insm=dummy&sel_camp=dummy&sel_levl=dummy&sel_sess=dummy&sel_instr=dummy&sel_ptrm=dummy&sel_attr=dummy&sel_cred=dummy&sel_tuition=dummy&sel_open=dummy&sel_weekend=dummy&sel_title=&sel_to_cred=&sel_from_cred=&submit_btn=Submit&sel_subj={ele}&sel_crse=&sel_crn=&sel_camp=%25&sel_levl=%25&sel_attr=%25&begin_hh=0&begin_mi=0&begin_ap=a&end_hh=0&end_mi=0&end_ap=a'''
 
-    store into a larger general dictionary and return, try to dump all at once
+        #print(duckweb_url2)
+        i += 1
+    
+        response = requests.get(duckweb_url2)
+        
+        duck_response = BeautifulSoup(response.text, 'html.parser')
+    
+        
+        courses = search_through_subj_urls(duck_response) 
 
-PROBLEMS WITH UPLOADING TO JASON
+        courses = remove_labs(courses)
+        courses = remove_2man_labs(courses)
+        courses = remove_independent(courses)
 
-'w' overrides everytime 
-'a' expects and list, but data base needs a dict (unless we find work around.)
+        prof_dict = add_to_dictionary(courses)
+        #print(prof_dict)
 
+        for ele in prof_dict:
+            print(ele, prof_dict[ele])
+        #with open('profs.json', 'w') as file:
+            #json.dump(prof_dict, file)
+            
+        print('DONE BABY')
 
-'''
 
 
 #------------------------------Turn data into list-----------------------------------------------------
+
+
+def get_all_acronyms(response):
+    subject_acros_plus_class = response.find_all('select', attrs={'name':'sel_subj'})
+    
+    acro_list = []
+    for subj in subject_acros_plus_class:
+    
+        parsed = subj.text
+        #print(parsed)
+        parsed = parsed.replace('\n', '|').replace('\xa0','N/A').split('|')
+        #subject_and_arco_list.append(parsed)
+        parsed.pop(0)
+        parsed.pop(0)
+        #parsed.pop()
+
+    for acro in parsed:
+
+        acro_list.append(acro[:4].strip("- "))
+
+
+    return acro_list
 
 
 
@@ -88,9 +145,13 @@ def search_through_subj_urls(main_response):
         for prof in teacher_name:
             prof_class = prof.find_parent('tr')
             course_info = prof_class.text.replace('\n', '|').replace('\xa0','N/A').split('|')
-        
+            #print(course_info, '------------------')
             course_info = list(filter(lambda ele: ele != '', course_info))
-            course_info.pop()
+            #print(course_info, '-------------------')
+
+            if len(course_info) == 9:
+                course_info.pop()
+            #print(course_info, '++++++++++++++++++++++++')
             
             course_info.append(courses[i])
 
