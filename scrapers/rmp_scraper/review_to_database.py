@@ -33,7 +33,7 @@ def insert_review(review: Review):
 
     try: 
         sql = f"""INSERT INTO reviews (comment, professor_name, rating, difficulty_rating, class) VALUES 
-              {review.comment}, {review.prof}, {review.quality}, {review.difficulty}, {review.course}"""
+              {review.get_comment()}, {review.get_prof()}, {review..get_quality()}, {review.get_difficulty()}, {review.get_course()}"""
         connection.cursor().execute(sql)
     except Exception as e: 
         print("Could not execute sql", e)
