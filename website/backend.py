@@ -1,6 +1,7 @@
 from flask import Flask
-from flask import render_template, request
+from flask import render_template, request, session, jsonify
 import mysql.connector
+
 
 
 # Initialize the app
@@ -38,7 +39,7 @@ def home():
     "Li J"
     ] 
 
-    return render_template('home.html',courses=courses, profs= profs, my_courses=my_courses) #the list courses is being passed to the html as a variable
+    return render_template('home.html',courses=courses, profs= profs) #the list courses is being passed to the html as a variable
 
 
 
@@ -104,14 +105,14 @@ def add_course(course):
     if course:
         if 'courses' not in session:
             session['my_courses'] = []
-        session['my_courses'].append(course))
+        session['my_courses'].append(course)
         session.modified = True
         return jsonify(success=True, courses=session['my_courses'])
 
 @app.route('/mycourses', methods=['GET'])
 def get_my_courses(): 
 
-    courses = session.get('my_courses', [])
+    my_courses = session.get('my_courses', [])
     return render_template('mycourses.html', my_courses=my_courses)
 
 
