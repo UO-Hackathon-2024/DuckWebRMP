@@ -11,8 +11,11 @@
 <body>
 
   <nav> 
-      <a href="/">Options</a>
+      <a href="/">Home</a>
+      <a href="/mycourses">My Courses</a>
   </nav> 
+
+
 
   <div id="background">
 
@@ -23,6 +26,8 @@
     {% for course in courses%}
     <div class="select">
 	<table border="1">
+	    <button onclick="addCourse('{{ course }}')">Add Course</button>
+
 	    <thead>
 		<tr>
 		    <th>Course</th>

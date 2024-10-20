@@ -20,6 +20,7 @@
       <img src ="../static/images/duckLogo.png" width="200" height = "150" >
     </div>
 
+    {% for course in my_courses %}
     <div class="select">
 	<table border="1">
 	    <thead>
@@ -34,7 +35,7 @@
 	    </thead>
 	    <tbody>
 		<tr>
-		    <td></td>
+		    <td>{{my_course[0].Professor}}</td>
 		    <td></td>
 		    <td></td>
 		    <td></td>
@@ -60,6 +61,7 @@
 		</tbody>
 	</table>
     </div>
+    {% endfor %}
   </div>
 </body>
 </html>
