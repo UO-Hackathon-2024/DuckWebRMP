@@ -51,7 +51,7 @@ def get_all_courses():
 
     cursor.execute("SELECT * FROM duckwebscraper")
     courses = cursor.fetchall()
-    cursor.execute("SELECT * FROM review")
+    cursor.execute("SELECT * FROM reviews")
     reviews = cursor.fetchall()
     
 
