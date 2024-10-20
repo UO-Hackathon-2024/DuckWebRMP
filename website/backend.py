@@ -59,7 +59,7 @@ def get_courses():
 
     cursor.execute(f"SELECT * FROM duckwebscraper WHERE (course = '{selected_course}') OR (course = '{alternate_course}')")
     courses = cursor.fetchall()
-    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}') OR (course = '{alternate_course}')")
+    cursor.execute(f"SELECT * FROM reviews WHERE (class = '{selected_course}') OR (class = '{alternate_course}')")
     reviews = cursor.fetchall()
 
     print(reviews)
