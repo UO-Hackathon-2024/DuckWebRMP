@@ -103,11 +103,12 @@ def get_courses():
 @app.route('/add_course', methods=['POST'])
 def add_course(course):
     if course:
-        if 'courses' not in session:
+        print(course)
+        if 'my_courses' not in session:
             session['my_courses'] = []
         session['my_courses'].append(course)
         session.modified = True
-        return jsonify(success=True, courses=session['my_courses'])
+        return jsonify(success=True, my_courses=session['my_courses'])
 
 @app.route('/mycourses', methods=['GET'])
 def get_my_courses(): 
