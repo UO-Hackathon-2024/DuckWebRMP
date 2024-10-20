@@ -102,6 +102,7 @@ def get_courses():
 
 @app.route('/add_course', methods=['POST'])
 def add_course(course):
+    print(course)
     if course:
         if 'my_courses' not in session:
             session['my_courses'] = []
@@ -114,7 +115,6 @@ def add_course(course):
 def get_my_courses(): 
 
     my_courses = session.get('my_courses', [])
-    print(my_courses)
     return render_template('mycourses.html', my_courses=my_courses)
 
 
