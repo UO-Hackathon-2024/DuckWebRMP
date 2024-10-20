@@ -1,0 +1,5 @@
+
+
+
+class NoProfFound(Exception): 
+    pass
