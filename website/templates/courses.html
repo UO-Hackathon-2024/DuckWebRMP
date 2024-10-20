@@ -39,7 +39,7 @@
 		</tr>
 	    </tbody>
 	</table>
-	{% if review.comment %}
+	{% if course.Professor in reviews%}
 	<table border="1">
 	    <thead>
 		<tr>
@@ -61,10 +61,7 @@
 	    {% endfor %}
 	</table>
         {% endif %}
-		
-
     </div>
-    {% endfor %}
 
   </div>
 </body>
