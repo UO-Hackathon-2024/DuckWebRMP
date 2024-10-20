@@ -107,9 +107,9 @@ def get_courses():
 @app.route('/mycourses', methods=['POST'])
 def get_my_courses(): 
     course_response = request.form.get('my_course')
+    course_response = ast.literal_eval(course_response)
     course = course_response[1]
     action = course_response[0]
-    print(course)
     course = ast.literal_eval(course)
     if action == 1 and course:
         if 'my_courses' not in session:
